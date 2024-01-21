@@ -35,3 +35,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ```
 nvm install --lts
 ```
+
+### 
+1. echars
+```
+npm install echarts --save
+```
+2. ArcoVue
+```
+npm install --save-dev @arco-design/web-vue
+```
