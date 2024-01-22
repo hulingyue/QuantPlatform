@@ -41,7 +41,7 @@ nvm install --lts
 ```
 npm install echarts --save
 ```
-2. ArcoVue
+2. Element Plus
 ```
-npm install --save-dev @arco-design/web-vue
+npm install element-plus --save
 ```
