@@ -45,3 +45,7 @@ npm install echarts --save
 ```
 npm install element-plus --save
 ```
+3. vue-router
+```
+ npm install vue-router@4
+```
