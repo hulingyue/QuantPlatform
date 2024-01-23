@@ -7,4 +7,6 @@
 <script setup lang="ts">
 import HeaderView from './HeaderView.vue'
 import FooterView from './FooterView.vue'
+
+document.title = "ARTrade量化交易平台"
 </script>
