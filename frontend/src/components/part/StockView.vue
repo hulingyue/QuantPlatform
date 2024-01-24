@@ -1,9 +1,20 @@
 <template>
+    <div style="display: flex; align-items: center; margin-left: 40px;">
+        <template v-if="websocketState === 'connected'">
+            <el-text class="mx-2" type="success">行情状态</el-text>
+            <el-icon><CircleCheck color="green"/></el-icon>
+        </template>
+        <template v-else>
+            <el-text class="mx-2" type="danger">行情状态</el-text>
+            <el-icon><CircleClose color="red"/></el-icon>
+        </template>
+    </div>
+
     <div ref="chart" style="width: 600px; height: 400px;"></div>
-    <p>WebSocket 状态: {{ websocketState }}</p>
 </template>
   
 <script setup lang="ts">
+import { ElIcon } from 'element-plus';
 import { reactive, ref, onMounted, watch } from 'vue';
 import { useWebSocket } from '../../javascript/websocket';
 import * as echarts from 'echarts';
@@ -83,4 +94,9 @@ const renderChart = () => {
 }
 
 </script>
-  
+
+<style>
+.el-icon {
+    margin-left: 10px;
+}
+</style>
