@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import State_404 from './components/State_404.vue'
-import HomePage from './components/HomePage.vue'
+import State_404 from './components/state/State_404.vue'
+import HomePage from './components/page/HomePage.vue'
 
 
 const routes = [
