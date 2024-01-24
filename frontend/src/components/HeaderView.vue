@@ -11,10 +11,10 @@
         </el-menu-item>
         <el-sub-menu index="1">
             <template #title><h2>品类</h2></template>
-            <el-menu-item index="1-1"><el-button>数字货币</el-button></el-menu-item>
-            <el-menu-item index="1-2"><el-button>期货</el-button></el-menu-item>
-            <el-menu-item index="1-3"><el-button>股票</el-button></el-menu-item>
-            <el-menu-item index="1-4"><el-button>现货</el-button></el-menu-item>
+            <el-menu-item index="1-1"><el-button text="true">数字货币</el-button></el-menu-item>
+            <el-menu-item index="1-2"><el-button text="true">期货</el-button></el-menu-item>
+            <el-menu-item index="1-3"><el-button text="true">股票</el-button></el-menu-item>
+            <el-menu-item index="1-4"><el-button text="true">现货</el-button></el-menu-item>
         </el-sub-menu>
         <div class="flex-grow"></div>
 
