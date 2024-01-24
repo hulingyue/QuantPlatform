@@ -122,7 +122,7 @@ const renderChart = () => {
 const selectedInterval = ref('ticker');
 
 const change_interval = (interval: string) => {
-  selectedInterval.value = interval;
+    selectedInterval.value = interval;
 };
 
 </script>
