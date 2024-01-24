@@ -4,32 +4,26 @@
 </template>
   
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { reactive, ref, onMounted, watch } from 'vue';
 import { useWebSocket } from '../../javascript/websocket';
 import * as echarts from 'echarts';
 
 const chart = ref<HTMLElement | null>(null);
-const markets: {[key: string]: {[key: string]: number[]}} = {}
-
-const BTCUSDT_prices :number[] = ref([])
+const markets: {[key: string]: number[]} = reactive({"BTCUSDT": reactive([]), "ETHUSDT": reactive([])})
 
 const { websocketState } = useWebSocket('ws://localhost:5678/', (data) => {
     const market = JSON.parse(data);
 
-    if (!(market.exchange in markets)) {
-        markets[market.exchange] = {};
+    if (!(market.symbol in markets)) {
+        markets[market.symbol] = reactive([]);
     }
 
-    if (!(market.symbol in markets[market.exchange])) {
-        markets[market.exchange][market.symbol] = [];
-    }
-
-    const prices: number[] = markets[market.exchange][market.symbol];
+    const prices: number[] = markets[market.symbol];
     prices.push(market.price);
 
     const max_size: number = 100;
-    if (prices.length >= max_size) {
-        prices.splice(0, prices.length - max_size);
+    if (prices.length > max_size) {
+        prices.splice(0, prices.length - max_size + 1);
     } else {
         const last_price = prices[prices.length - 1];
         while (prices.length < max_size) {
@@ -37,12 +31,7 @@ const { websocketState } = useWebSocket('ws://localhost:5678/', (data) => {
         }
     }
 
-    markets[market.exchange][market.symbol] = prices;
-
-    if (market.symbol === "BTCUSDT") {
-        BTCUSDT_prices.values = prices.values;
-    }
-    // console.log(markets);
+    markets[market.symbol] = prices;
 });
 
 
@@ -56,24 +45,42 @@ const renderChart = () => {
     const option = {
         xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: [
+              '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+            , '', '', '', '', '', '', '', '', '', ''
+        ]
         },
         yAxis: {
-        type: 'value'
+            type: 'value',
+            min: 0,
+            max: 0,
+            interval: 20
         },
         series: [{
-        data: BTCUSDT_prices.values,
-        type: 'line'
+            data: [] as number[],
+            type: 'line'
         }]
     };
     myChart.setOption(option);
+
+    watch(() => markets, (new_markets) => {
+        const BTCUSDT = new_markets.BTCUSDT;
+        option.series[0].data = BTCUSDT;
+        option.series[0].type = 'line';
+        
+        option.yAxis.max = Math.floor((Math.max(...BTCUSDT) + 100) / 100) * 100;
+        option.yAxis.min = Math.floor((Math.min(...BTCUSDT) - 100) / 100) * 100;
+        myChart.setOption(option);
+    }, { deep: true });
 }
 
-watch(() => BTCUSDT_prices.values, (new_markets) => {
-    console.log(new_markets);
-    // const new_data =  new_markets;
-    // option.series[0].data = new_data;
-    // myChart.setOption(option);
-});
 </script>
   
