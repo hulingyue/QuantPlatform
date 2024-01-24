@@ -8,6 +8,12 @@
             <el-text class="mx-2" type="danger">行情状态</el-text>
             <el-icon><CircleClose color="red"/></el-icon>
         </template>
+
+        <el-text class="mx-2" type="info">交易所</el-text>
+        <el-text class="mx-2" type="primary">{{ exchange }}</el-text>
+
+        <el-text class="mx-2" type="info">标的</el-text>
+        <el-text class="mx-2" type="primary">{{ symbol }}</el-text>
     </div>
 
     <div ref="chart" style="width: 600px; height: 400px;"></div>
@@ -18,6 +24,9 @@ import { ElIcon } from 'element-plus';
 import { reactive, ref, onMounted, watch } from 'vue';
 import { useWebSocket } from '../../javascript/websocket';
 import * as echarts from 'echarts';
+
+const exchange = ref("Bybit");
+const symbol = ref("BTCUSDT");
 
 const chart = ref<HTMLElement | null>(null);
 const markets: {[key: string]: number[]} = reactive({"BTCUSDT": reactive([]), "ETHUSDT": reactive([])})
@@ -96,7 +105,7 @@ const renderChart = () => {
 </script>
 
 <style>
-.el-icon {
+.el-icon, .el-text {
     margin-left: 10px;
 }
 </style>
