@@ -31,7 +31,7 @@
         </el-text>
     </div>
 
-    <div ref="chart" style="width: 900px; height: 600px;"></div>
+    <div ref="chart" style="width: 600px; height: 400px;"></div>
 </template>
   
 <script setup lang="ts">
@@ -80,6 +80,13 @@ const renderChart = () => {
     if (!chart.value) { return; }
     const myChart = echarts.init(chart.value);
     const option = {
+        grid: {
+            left: '10px',
+            right: '10px',
+            top: '10px',
+            bottom: '10px',
+            containLabel: true
+        },
         xAxis: {
         type: 'category',
         data: [
