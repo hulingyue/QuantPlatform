@@ -2,6 +2,7 @@ import threading
 from queue import Queue
 import websockets
 import asyncio
+import json
 
 from market import Market
 
@@ -9,22 +10,40 @@ queue = Queue()
 
 class MyMarket(Market):
     def on_market_bbo(self, bbo):
-        message = f"{bbo.exchange} {bbo.symbol} {bbo.time} {bbo.price}"
+        message = json.dumps({
+              "exchange": bbo.exchange
+            , "symbol": bbo.symbol
+            , "time": bbo.time
+            , "price": bbo.price
+        })
         queue.put(message)
         pass
 
 
-async def show_market(websocket):
+clients = set()
+
+async def register(websocket):
+    clients.add(websocket)
+    print(clients)
+    try:
+        await show_market()
+        await websocket.wait_closed()
+    finally:
+        clients.remove(websocket)
+        
+
+async def show_market():
     while True:
         if queue.empty():
             continue
 
         message = queue.get()
-        await websocket.send(message)
-        # await asyncio.sleep(3)
+        print(message)
+        websockets.broadcast(clients, message)
+        await asyncio.sleep(0.1)
 
 async def main():
-    async with websockets.serve(show_market, "localhost", 5678):
+    async with websockets.serve(register, "localhost", 5678):
         await asyncio.Future()  # run forever
 
 
