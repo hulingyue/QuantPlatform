@@ -1,5 +1,5 @@
 <template>
-    <div style="display: flex; align-items: center; margin-left: 40px;">
+    <div>
         <template v-if="websocketState === 'connected'">
             <el-text class="mx-2" type="success">行情状态</el-text>
             <el-icon><CircleCheck color="green"/></el-icon>
@@ -16,7 +16,22 @@
         <el-text class="mx-2" type="primary">{{ symbol }}</el-text>
     </div>
 
-    <div ref="chart" style="width: 600px; height: 400px;"></div>
+    <div>
+        <el-text class="mx-2">图标</el-text>
+    </div>
+
+    <div>
+        <el-text
+            v-for="(item, index) in intervals"
+            :key="index"
+            class="interval"
+            :class="{ 'el-text--warning': selectedInterval === item, 'el-text--info': selectedInterval !== item }"
+            @click="change_interval(item)">
+            {{ item }}
+        </el-text>
+    </div>
+
+    <div ref="chart" style="width: 900px; height: 600px;"></div>
 </template>
   
 <script setup lang="ts">
@@ -27,6 +42,8 @@ import * as echarts from 'echarts';
 
 const exchange = ref("Bybit");
 const symbol = ref("BTCUSDT");
+
+const intervals = ['ticker', '1m', '5m', '15m', '30m', '1h', '4h', '1d', '1w', '1M'];
 
 const chart = ref<HTMLElement | null>(null);
 const markets: {[key: string]: number[]} = reactive({"BTCUSDT": reactive([]), "ETHUSDT": reactive([])})
@@ -102,9 +119,21 @@ const renderChart = () => {
     }, { deep: true });
 }
 
+const selectedInterval = ref('ticker');
+
+const change_interval = (interval: string) => {
+  selectedInterval.value = interval;
+};
+
 </script>
 
 <style>
+.div {
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+}
+
 .el-icon, .el-text {
     margin-left: 10px;
 }
