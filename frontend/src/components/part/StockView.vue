@@ -38,6 +38,7 @@
 import { ElIcon } from 'element-plus';
 import { reactive, ref, onMounted, watch } from 'vue';
 import { useWebSocket } from '../../javascript/websocket';
+import { ResourceConfig } from '../../javascript/resource';
 import * as echarts from 'echarts';
 
 const exchange = ref("Bybit");
@@ -48,7 +49,7 @@ const intervals = ['ticker', '1m', '5m', '15m', '30m', '1h', '4h', '1d', '1w', '
 const chart = ref<HTMLElement | null>(null);
 const markets: {[key: string]: number[]} = reactive({"BTCUSDT": reactive([]), "ETHUSDT": reactive([])})
 
-const { websocketState } = useWebSocket('ws://localhost:5678/', (data) => {
+const { websocketState } = useWebSocket(ResourceConfig.BybitMarket, (data) => {
     const market = JSON.parse(data);
 
     if (!(market.symbol in markets)) {
