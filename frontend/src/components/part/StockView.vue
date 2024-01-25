@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="margin-bottom: 20px;">
         <template v-if="websocketState === 'connected'">
             <el-text class="mx-2" type="success">行情状态</el-text>
             <el-icon><CircleCheck color="green"/></el-icon>
