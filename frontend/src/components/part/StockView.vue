@@ -1,14 +1,15 @@
 <template>
     <div style="margin-bottom: 20px;">
-        <template v-if="websocketState === 'connected'">
+        <span :class="websocketState === 'connected' ? 'connect':'disconnect' ">
+            {{websocketState === 'connected' ? '连接成功' :'连接失败'}}</span>
+        <!-- <template v-if="websocketState === 'disconnected'">
             <el-text class="mx-2" type="success">行情状态</el-text>
             <el-icon><CircleCheck color="green"/></el-icon>
         </template>
         <template v-else>
             <el-text class="mx-2" type="danger">行情状态</el-text>
             <el-icon><CircleClose color="red"/></el-icon>
-        </template>
-
+        </template> -->
         <el-text class="mx-2" type="info">交易所</el-text>
         <el-text class="mx-2" type="primary">{{ exchange }}</el-text>
 
@@ -32,6 +33,8 @@
     </div>
 
     <div ref="chart" style="width: 600px; height: 400px;"></div>
+
+
 </template>
   
 <script setup lang="ts">
@@ -143,5 +146,21 @@ const change_interval = (interval: string) => {
 
 .el-icon, .el-text {
     margin-left: 10px;
+}
+.connect {
+    padding: 2px, 10px;
+    width: fit-content !important;
+    border-radius: 5px;
+    color: rgb(19,192 ,100);
+    background-color: rgba(19,192 ,100, 0.219);
+    margin:auto;
+}
+.disconnect {
+    padding: 2px, 10px;
+    width: fit-content !important;
+    border-radius: 5px;
+    color: rgb(192,53 ,53);
+    background-color: rgba(192,53 ,53, 0.4);
+    margin:auto;
 }
 </style>
