@@ -17,7 +17,7 @@
     </div>
 
     <div>
-        <el-text class="mx-2">图标</el-text>
+        <el-text class="mx-2">图表</el-text>
     </div>
 
     <div>
