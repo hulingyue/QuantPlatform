@@ -36,6 +36,19 @@ class MyMarket(Market):
         queue.put(message)
         pass
 
+    def on_market_depth(self, depth):
+        message = json.dumps({
+              "exchange": depth.exchange
+            , "symbol": depth.symbol
+            , "time": depth.time
+            , "price": depth.price
+            , "quantity": depth.quantity
+            , "asks": [(pair.price, pair.quantity) for pair in depth.asks]
+            , "bids": [(pair.price, pair.quantity) for pair in depth.bids]
+        })
+        queue.put(message)
+        pass
+
 
 clients = set()
 
