@@ -1,5 +1,4 @@
 from pystrategy import *
-import threading
 
 
 class Market(Strategy):
@@ -11,6 +10,8 @@ class Market(Strategy):
 
         super().set_task(lambda: self.task())
         super().set_on_market_bbo(lambda bbo: self.on_market_bbo(bbo))
+        super().set_on_market_kline(lambda kline: self.on_market_kline(kline))
+        super().set_on_market_depth(lambda depth: self.on_market_depth(depth))
     
     def task(self):
         obj = SymbolObj()
@@ -23,14 +24,10 @@ class Market(Strategy):
             pass
 
     def on_market_bbo(self, bbo):
-        # print(bbo.exchange, bbo.symbol, bbo.time, bbo.price)
-        message = f"{bbo.exchange} {bbo.symbol} {bbo.time} {bbo.price}"
-        print(message)
         pass
 
+    def on_market_kline(self, kline):
+        pass
 
-
-if __name__ == "__main__":
-    market = Market()
-    market_thread = threading.Thread(target=market.run)  # 将 Market 类的运行放在一个单独的线程中
-    market_thread.start()
+    def on_market_depth(self, depth):
+        pass

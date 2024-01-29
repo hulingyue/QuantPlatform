@@ -19,6 +19,23 @@ class MyMarket(Market):
         queue.put(message)
         pass
 
+    def on_market_kline(self, kline):
+        message = json.dumps({
+              "exchange": kline.exchange
+            , "symbol": kline.symbol
+            , "time": kline.time
+            , "confirm": kline.confirm
+            , "interval": kline.interval
+            , "start": kline.start
+            , "end": kline.end
+            , "high": kline.high
+            , "low": kline.low
+            , "open": kline.open
+            , "close": kline.close
+        })
+        queue.put(message)
+        pass
+
 
 clients = set()
 
