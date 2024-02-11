@@ -6,7 +6,7 @@
         :ellipsis="false"
         @select="handleSelect">
 
-        <el-menu-item index="0">
+        <el-menu-item index="/">
             <img style="height: 60px;" src="/logo.jpg" alt="logo">
         </el-menu-item>
         <el-sub-menu index="/exchange">
